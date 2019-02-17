@@ -6,6 +6,7 @@ class Ship {
     this.size = size
     this.id = id
     this.coordinates = []
+    this.direction
     this.hits = 0
   }
 }
@@ -42,31 +43,28 @@ const cpuFleet = buildFleet()
 
 // Place cpu ships randomly within their board limits (will need a loop to keep checking if ships fit)
 
-function placeCpuShips(fleet) {
+function placeCpuShips(fleet, board) {
   let ship
   let xCoord
   let yCoord
-  const direction = Math.floor(Math.random() * 2) // 0 for horizontal. 1 for vertical
 
   for(let i = 0; i < fleet.length; i++) {
+    const direction = Math.floor(Math.random() * 2) // 0 for horizontal. 1 for vertical
     ship = fleet[i]
-    console.log(ship)
+    ship.direction = direction
 
     if(direction === 0) {
       xCoord = Math.floor(Math.random() * (10 - ship.size))
       yCoord = Math.floor(Math.random() * 10)
-      ship.coordinates = [xCoord, yCoord]
-    }
-
-    if(direction === 1) {
+    } else {
       xCoord = Math.floor(Math.random() * 10)
       yCoord = Math.floor(Math.random() * (10 - ship.size))
-      ship.coordinates = [xCoord, yCoord]
     }
+    board[xCoord][yCoord] = ship.id
   }
 }
 
-placeCpuShips(cpuFleet)
+placeCpuShips(cpuFleet, cpuBoard)
 
 // Create function to check for collisions
 
@@ -83,6 +81,4 @@ placeCpuShips(cpuFleet)
 //
 
 console.log(cpuFleet)
-console.log(playerFleet)
 console.log(cpuBoard)
-console.log(playerBoard)
