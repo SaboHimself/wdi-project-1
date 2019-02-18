@@ -1,3 +1,46 @@
 body {
   background: red;
 }
+
+* {
+  box-sizing: border-box;
+}
+
+main {
+  display: flex;
+  justify-content: space-around;
+}
+
+.player-board {
+  border: 10px solid black;
+  width: 500px;
+  height: 500px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  background: cyan;
+}
+
+.cpu-board {
+  margin: 10px;
+  border: 10px solid black;
+  width: 500px;
+  height: 500px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  background: cyan;
+}
+
+.square {
+  border: 1px dotted cyan;
+  height: 10%;
+  width: 10%;
+  background: black;
+}
+
+.square:hover {
+  border: 3px dotted cyan;
+  border-radius: 5%;
+  transform: scale(1.1);
+} */
