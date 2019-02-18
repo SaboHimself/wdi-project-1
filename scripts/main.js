@@ -60,7 +60,18 @@ function placeCpuShips(fleet, board) {
       xCoord = Math.floor(Math.random() * 10)
       yCoord = Math.floor(Math.random() * (10 - ship.size))
     }
-    board[xCoord][yCoord] = ship.id
+
+    for(let j = 0; j < ship.size; j++) {
+      if(direction === 0) {
+        board[xCoord + j][yCoord] = ship.id
+      }
+      if(direction === 1) {
+        board[xCoord][yCoord + j] = ship.id
+      }
+    }
+    // board[xCoord][yCoord] = ship.id
+
+    //ARRAY.FILL()
   }
 }
 
