@@ -36,17 +36,23 @@ document.addEventListener('DOMContentLoaded', () => {
     buildBoard() {
       if(this.playerType === 'cpu') {
         this.board = document.querySelector('.cpu-board')
-      } else {
+        for(let i = 0; i < 100; i++) {
+          this.cpuCell = document.createElement('div')
+          this.cpuCell.setAttribute('class', 'cpu-cell')
+          this.cpuCell.setAttribute('data-id', 'cpu' + i)
+          this.board.appendChild(this.cpuCell)
+        }
+      } else if (this.playerType === 'player') {
         this.board = document.querySelector('.player-board')
+        for(let i = 0; i < 100; i++) {
+          this.playerCell = document.createElement('div')
+          this.playerCell.setAttribute('class', 'player-cell')
+          this.playerCell.setAttribute('data-id', 'player' + i)
+          this.board.appendChild(this.playerCell)
+        }
       }
-      for(let i = 0; i < 100; i++) {
-        this.square = document.createElement('div')
-        this.square.setAttribute('class', 'square')
-        this.square.setAttribute('data-id', i)
-        this.board.appendChild(this.square)
-      }
-      const divs = document.querySelectorAll('.square')
-      divs.forEach(div => div.addEventListener('click', this.placePlayerShips.bind(this)))
+      const playerShipPlacer = document.querySelectorAll('.player-cell')
+      playerShipPlacer.forEach(div => div.addEventListener('click', this.placePlayerShips.bind(this)))
     }
 
     buildFleet () {
@@ -97,6 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if(this.playerType === 'player') {
         for(let i = 0; i < this.fleet.length; i++) {
           const currentShip = this.fleet[i]
+          e.target.classList.add('player-ship')
         }
       }
     }

@@ -68,20 +68,20 @@ main {
   color: cyan;
 }
 
-.square {
+.cpu-cell,.player-cell {
   border: 1px dotted cyan;
   height: 10%;
   width: 10%;
   background: black;
 }
 
-.square:hover {
+.cpu-cell:hover,.player-cell:hover {
   border: 3px dotted cyan;
   border-radius: 5%;
   transform: scale(1.1);
 }
 
-.ship {
+.player-ship {
   border: 1px dotted cyan;
   height: 10%;
   width: 10%;
