@@ -13,16 +13,23 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Create board - default empty board one for each player
-  function board() {
-    const grid = []
 
-    for(let i = 0; i < 10; i++) {
-      grid.push([])
-      for(let j = 0; j < 10; j++) {
-        grid[i].push(0)
-      } // end of second for loop
-    } //end of first for loop
-    return grid
+  class Board {
+    constructor (playerType) {
+      this.playerType = playerType
+      this.hits = []
+      this.grid = []
+    }
+
+    buildBoard() {
+      for(let i = 0; i < 10; i++) {
+        this.grid.push([])
+        for(let j = 0; j < 10; j++) {
+          this.grid[i].push(0)
+        } // end of second for loop
+      } //end of first for loop
+      return this.grid
+    }
   }
 
   // Create a fleet function to store all ships in a list
@@ -37,8 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
     return fleet
   }
 
-  const playerBoard = board()
-  const cpuBoard = board()
+  const playerBoard = new Board('player')
+  const cpuBoard = new Board('cpu')
   const playerFleet = buildFleet()
   const cpuFleet = buildFleet()
 
@@ -74,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return board
   }
 
-  placeCpuShips(cpuFleet, cpuBoard)
+  placeCpuShips(cpuFleet, cpuBoard.buildBoard())
 
   // Create function to check for collisions
 
@@ -92,6 +99,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   }
+let cpuReferenceBoard = []
+
   function buildCpuBoard() {
     const cpuBoard = document.querySelector('.cpu-board')
     for(let i = 0; i < 10; i++) {
@@ -102,6 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const ySquare = document.createElement('div')
         ySquare.setAttribute('class', 'square')
         cpuBoard.appendChild(ySquare)
+        cpuReferenceBoard.push()
       }
     }
   }
@@ -111,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Place players ships (check for collisions)
 
   function placePlayerShips (fleet, board) {
-    
+
   }
 
   placePlayerShips(playerFleet, playerBoard)
