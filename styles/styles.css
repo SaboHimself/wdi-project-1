@@ -98,17 +98,19 @@ main {
   border: 1px dotted cyan;
   height: 10%;
   width: 10%;
+  background: black;
 }
 
 .hit {
-  border: 1px dotted cyan;
+  border: 1px dotted black;
   height: 10%;
   width: 10%;
   background: red;
+  border: 1px dotted cyan;
 }
 
 .miss {
-  border: 1px dotted cyan;
+  border: 1px dotted black;
   height: 10%;
   width: 10%;
   background: cyan;

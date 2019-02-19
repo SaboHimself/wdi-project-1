@@ -77,12 +77,12 @@ document.addEventListener('DOMContentLoaded', () => {
           if(direction === 0) {
             position = Math.floor(Math.random() * (100 - ship.size))
             for(let j = 0; j < ship.size; j++) {
-              this.gridItem[position + j].setAttribute('class', 'ship')
+              this.gridItem[position + j].setAttribute('class', 'enemy-ship')
             }
           } else {
             position = Math.floor(Math.random() * (10 - ship.size))
             for(let j = 0; j < ship.size; j++) {
-              this.gridItem[position + j * 10].setAttribute('class', 'ship')
+              this.gridItem[position + j * 10].setAttribute('class', 'enemy-ship')
             }
           }
         }
@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
               }
               ship++
-              this.playerAttack
+              playerAttack()
               console.log(this.occupied)
               console.log(ship)
             }
@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const attack = document.querySelectorAll('#cpu-cell')
     attack.forEach((item) => {
       item.addEventListener('click', (e) => {
-        if(item.classList.contains('ship')) {
+        if(item.classList.contains('enemy-ship')) {
           e.target.setAttribute('class', 'hit')
           playerHits++
           cpuAttack()
@@ -213,5 +213,4 @@ document.addEventListener('DOMContentLoaded', () => {
   //   }
   // }
   initGame()
-  playerAttack()
 })
