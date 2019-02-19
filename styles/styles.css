@@ -73,6 +73,7 @@ main {
   height: 10%;
   width: 10%;
   background: black;
+  color: white;
 }
 
 .cpu-cell:hover,.player-cell:hover {
@@ -81,7 +82,7 @@ main {
   transform: scale(1.1);
 }
 
-.player-ship {
+.ship {
   border: 1px dotted cyan;
   height: 10%;
   width: 10%;
