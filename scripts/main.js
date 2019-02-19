@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+  let cpuHits = 0
+  let playerHits = 0
   // Create Ship constructor
   class Ship {
     constructor(type, size, id) {
@@ -17,24 +19,14 @@ document.addEventListener('DOMContentLoaded', () => {
     constructor (playerType) {
       this.playerType = playerType
       this.attempts = []
+      this.hits = 0
       this.shipsPlaced = false
       this.occupied = []
       this.buildBoard()
       this.buildFleet()
       this.placeCpuShips()
       this.placePlayerShips()
-      this.attack()
     }
-
-    // buildReferenceGrid() {
-    //   for(let i = 0; i < 100; i++) {
-    //     this.grid.push(0)
-    //     for(let j = 0; j < 10; j++) {
-    //       this.grid[i].push(0)
-    //     } // end of second for loop
-    //   } //end of first for loop
-    //   return this.grid
-    // }
 
     buildBoard() {
       if(this.playerType === 'cpu') {
@@ -42,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
         for(let i = 0; i < 100; i++) {
           this.cpuCell = document.createElement('div')
           this.cpuCell.setAttribute('class', 'cpu-cell')
+          this.cpuCell.setAttribute('id', 'cpu-cell')
           this.cpuCell.setAttribute('data-id', i)
           this.board.appendChild(this.cpuCell)
           this.gridItem = document.querySelectorAll('.cpu-cell')
@@ -51,6 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
         for(let i = 0; i < 100; i++) {
           this.playerCell = document.createElement('div')
           this.playerCell.setAttribute('class', 'player-cell')
+          this.playerCell.setAttribute('id', 'player-cell')
           this.playerCell.setAttribute('data-id', i)
           this.board.appendChild(this.playerCell)
           this.gridItem = document.querySelectorAll('.player-cell')
@@ -104,8 +98,8 @@ document.addEventListener('DOMContentLoaded', () => {
         this.gridItem.forEach((item) => {
           item.addEventListener('click', (e) => {
             const dataId = parseInt(e.target.getAttribute('data-id'))
-            if(ship >= 5){
-              return
+            if(ship >= 5) {
+              this.gameStart
             } else if(ship === 0) {
               for(let i = 0; i < 5; i++) {
                 if(e.shiftKey) {
@@ -176,42 +170,48 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
               }
               ship++
+              this.playerAttack
+              console.log(this.occupied)
+              console.log(ship)
             }
           })
         })
       }
-      console.log(this.occupied)
-    }
-
-    attack() {
-      if(this.playerType === 'cpu') {
-        this.gridItem.forEach((item) => {
-          item.addEventListener('click', () => {
-            console.log('player-click')
-          })
-        })
-      } else {
-        return
-      }
     }
   }
 
-  const playerBoard = new Board('player')
-  const cpuBoard = new Board('cpu')
+  function initGame() {
+    new Board('player')
+    new Board('cpu')
+  }
 
+  function playerAttack() {
+    const attack = document.querySelectorAll('#cpu-cell')
+    attack.forEach((item) => {
+      item.addEventListener('click', (e) => {
+        if(item.classList.contains('ship')) {
+          e.target.setAttribute('class', 'hit')
+          playerHits++
+          cpuAttack()
+        } else if(item.classList.contains('cpu-cell')) {
+          e.target.setAttribute('class', 'miss')
+          cpuAttack()
+        }
+      })
+    })
+  }
 
-  console.log(playerBoard)
-  console.log(cpuBoard)
-
-  // Place players ships (check for collisions)
-
-  // Game Start
-
-  // Player attacks the cpu board - check for hit
-
-  // Cpu attacks player board - check for hit
-
-  // Repeat above until either the player or cpu have no ships left in list
-
+  // function cpuAttack() {
   //
+  //   if(attack.classList.contains('ship')) {
+  //     attack.setAttribute('class', 'hit')
+  //     cpuHits++
+  //     playerAttack()
+  //   } else if(attack.classList.contains('player-cell')) {
+  //     attack.setAttribute('class', 'miss')
+  //     playerAttack()
+  //   }
+  // }
+  initGame()
+  playerAttack()
 })

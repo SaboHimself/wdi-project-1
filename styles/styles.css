@@ -73,13 +73,19 @@ main {
   height: 10%;
   width: 10%;
   background: black;
-  color: white;
 }
 
-.cpu-cell:hover,.player-cell:hover {
+.cpu-cell:hover,.player-cell:hover, .ship:hover {
   border: 3px dotted cyan;
   border-radius: 5%;
   transform: scale(1.1);
+}
+
+.finished {
+  border: 1px dotted cyan;
+  height: 10%;
+  width: 10%;
+  background: black;
 }
 
 .ship {
@@ -87,4 +93,18 @@ main {
   height: 10%;
   width: 10%;
   background: grey;
+}
+
+.hit {
+  border: 1px dotted cyan;
+  height: 10%;
+  width: 10%;
+  background: red;
+}
+
+.miss {
+  border: 1px dotted cyan;
+  height: 10%;
+  width: 10%;
+  background: cyan;
 }
