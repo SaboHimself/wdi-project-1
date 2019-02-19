@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
   let cpuHits = 0
   let playerHits = 0
+  let cpuAttempts = []
+  let playerAttempts = []
   // Create Ship constructor
   class Ship {
     constructor(type, size, id) {
@@ -18,8 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
   class Board {
     constructor (playerType) {
       this.playerType = playerType
-      this.attempts = []
-      this.hits = 0
       this.shipsPlaced = false
       this.occupied = []
       this.buildBoard()
