@@ -25,7 +25,11 @@ document.addEventListener('DOMContentLoaded', () => {
       this.shipsPlaced = false
       this.buildBoard()
       this.buildFleet()
-      this.placeCpuShips()
+      this.placeCpuShips(5)
+      this.placeCpuShips(4)
+      this.placeCpuShips(3)
+      this.placeCpuShips(3)
+      this.placeCpuShips(2)
       this.placePlayerShips()
     }
 
@@ -55,35 +59,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     buildFleet () {
-      this.fleet = [
-        new Ship('carrier', 5, 'AC'),
-        new Ship('battleship', 4, 'B'),
-        new Ship('cruiser', 3, 'C'),
-        new Ship('submarine', 3, 'S'),
-        new Ship('destroyer', 2, 'D')
-      ]
+      this.fleet = []
+      const carrier = new Ship('carrier', 5, 'AC')
+      const battleship = new Ship('battleship', 4, 'B')
+      const cruiser = new Ship('cruiser', 3, 'C')
+      const submarine = new Ship('submarine', 3, 'S')
+      const destroyer = new Ship('destroyer', 2, 'D')
+      this.fleet.push(carrier, battleship, cruiser, submarine, destroyer)
     }
 
-    placeCpuShips() {
-      let ship
-      let position
 
+
+    placeCpuShips(shipLength) {
+      let position
+      let occupied = []
       if(this.playerType === 'cpu') {
 
-        for(let i = 0; i < this.fleet.length; i++) {
-          const direction = Math.floor(Math.random() * 2) // 0 for horizontal. 1 for vertical
-          ship = this.fleet[i]
+        const direction = Math.floor(Math.random() * 2) // 0 for horizontal. 1 for vertical
 
-          if(direction === 0) {
-            position = Math.floor(Math.random() * 100)
-            for(let j = 0; j < ship.size; j++) {
-              this.gridItem[position + j].setAttribute('class', 'ship')
-            }
+        if(direction === 0) {
+          position = Math.floor(Math.random() * 100)
+          if (position % 10 > (10 - shipLength)) {
+            this.placeCpuShips(shipLength)
           } else {
-            position = Math.floor(Math.random() * 100)
-            for(let j = 0; j < ship.size; j++) {
-              this.gridItem[position + j * 10].setAttribute('class', 'ship')
+            for(let j = 0; j < shipLength; j++) {
+              this.gridItem[position + j].setAttribute('class', 'ship')
+              occupied.push(position + j)
             }
+          }
+        } else if (direction === 1) {
+          position = Math.floor(Math.random() * ((100 - (shipLength * 10)) + 10))
+          for(let j = 0; j < shipLength; j++) {
+            this.gridItem[position + j * 10].setAttribute('class', 'ship')
+            occupied.push(position + j * 10)
+            console.log(this.gridItem[position + j * 10])
           }
         }
       }
@@ -170,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
               }
               ship++
-              cpuAttack()
+              setTimeout(cpuAttack, 1000)
             }
           })
         })
@@ -184,42 +193,48 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function playerAttack() {
-    const attack = document.querySelectorAll('#cpu-cell')
-    attack.forEach((item) => {
-      item.addEventListener('click', (e) => {
-        if(item.classList.contains('enemy-ship')) {
-          e.target.setAttribute('class', 'hit')
-          playerHits++
-          // setTimeout(cpuAttack, 2000)
-          cpuAttack()
-        } else if(item.classList.contains('cpu-cell')) {
-          e.target.setAttribute('class', 'miss')
-          // setTimeout(cpuAttack, 2000)
-          cpuAttack()
-        }
+    if(cpuHits === 17) {
+      console.log('you lose')
+    } else {
+      const attack = document.querySelectorAll('#cpu-cell')
+      attack.forEach((item) => {
+        item.addEventListener('click', (e) => {
+          if(item.classList.contains('enemy-ship')) {
+            e.target.setAttribute('class', 'hit')
+            playerHits++
+            setTimeout(cpuAttack, 1000)
+            // cpuAttack()
+          } else if(item.classList.contains('cpu-cell')) {
+            e.target.setAttribute('class', 'miss')
+            setTimeout(cpuAttack, 1000)
+            // cpuAttack()
+          }
+        })
       })
-    })
+    }
   }
 
   function cpuAttack() {
-    const choice = Math.floor(Math.random() * 100)
-    const attack = document.querySelectorAll('#player-cell')
-    console.log('my turn')
-    if(!cpuAttempts.includes((choice))) {
-      if(attack[choice].classList.contains('ship')) {
-        attack[choice].setAttribute('class', 'hit')
-        console.log(choice)
-        cpuAttempts.push(choice)
-        playerAttack()
-      } else {
-        attack[choice].setAttribute('class', 'miss')
-        console.log(choice)
-        cpuAttempts.push(choice)
-        playerAttack()
-      }
+    if(playerHits === 17) {
+      console.log('you win')
     } else {
-      console.log('repeat')
-      cpuAttack()
+      const choice = Math.floor(Math.random() * 100)
+      const attack = document.querySelectorAll('#player-cell')
+
+      if(!cpuAttempts.includes((choice))) {
+        if(attack[choice].classList.contains('ship')) {
+          attack[choice].setAttribute('class', 'hit')
+          cpuAttempts.push(choice)
+          cpuHits++
+          playerAttack()
+        } else {
+          attack[choice].setAttribute('class', 'miss')
+          cpuAttempts.push(choice)
+          playerAttack()
+        }
+      } else {
+        cpuAttack()
+      }
     }
   }
   initGame()
