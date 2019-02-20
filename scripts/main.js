@@ -83,14 +83,14 @@ document.addEventListener('DOMContentLoaded', () => {
             this.placeCpuShips(shipLength)
           } else {
             for(let j = 0; j < shipLength; j++) {
-              this.gridItem[position + j].setAttribute('class', 'ship')
+              this.gridItem[position + j].setAttribute('class', 'enemy-ship')
               occupied.push(position + j)
             }
           }
         } else if (direction === 1) {
           position = Math.floor(Math.random() * ((100 - (shipLength * 10)) + 10))
           for(let j = 0; j < shipLength; j++) {
-            this.gridItem[position + j * 10].setAttribute('class', 'ship')
+            this.gridItem[position + j * 10].setAttribute('class', 'enemy-ship')
             occupied.push(position + j * 10)
             console.log(this.gridItem[position + j * 10])
           }
@@ -192,9 +192,17 @@ document.addEventListener('DOMContentLoaded', () => {
     new Board('cpu')
   }
 
+  function result(winner){
+    if(winner === 'cpu') {
+      alert('You lose')
+    } else {
+      alert('winner')
+    }
+  }
+
   function playerAttack() {
     if(cpuHits === 17) {
-      console.log('you lose')
+      result('cpu')
     } else {
       const attack = document.querySelectorAll('#cpu-cell')
       attack.forEach((item) => {
@@ -216,7 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function cpuAttack() {
     if(playerHits === 17) {
-      console.log('you win')
+      result('player')
     } else {
       const choice = Math.floor(Math.random() * 100)
       const attack = document.querySelectorAll('#player-cell')
