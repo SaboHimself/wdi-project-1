@@ -1,5 +1,5 @@
 body {
-  background: #000;
+  background-image: url(../images/space.png);
 }
 
 * {
@@ -31,13 +31,14 @@ main {
 }
 
 .player-board, .cpu-board {
-  border: 5px solid #ffe918;
+  border: 5px inset #ffe918;
   min-width: 500px;
   min-height: 500px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
   background: black;
+  box-shadow: 2px 2px 10px 5px #ffe918;
 }
 
 .enemy-wrapper {
@@ -67,6 +68,23 @@ main {
   font-family: sans-serif;
 }
 
+.new-game {
+  padding: 15px;
+  max-width: 350px;
+  height: 50px;
+  color: #15effe;
+  font-family: sans-serif;
+  border: 2px solid #15effe;
+  border-radius: 50%;
+  box-shadow: 0 0 25px cyan;
+}
+
+.new-game:hover {
+  color: #109ca6;
+  border: 2px solid #109ca6;
+  cursor: pointer;
+}
+
 .cpu-cell,.player-cell {
   border: 1px dotted #15effe;
   height: 10%;
@@ -78,13 +96,7 @@ main {
   border: 3px dotted #15effe;
   border-radius: 5%;
   transform: scale(1.1);
-}
-
-.finished {
-  border: 1px dotted #15effe;
-  height: 10%;
-  width: 10%;
-  background: black;
+  cursor: crosshair;
 }
 
 .ship {
@@ -101,17 +113,37 @@ main {
   background: black;
 }
 
-.hit {
+.enemy-hit {
   border: 1px dotted black;
   height: 10%;
   width: 10%;
-  background: red;
+  background-image: url(../images/rebel-hit.png);
+  background-size: cover;
+  border: 1px dotted #15effe;
+}
+.player-hit {
+  border: 1px dotted black;
+  height: 10%;
+  width: 10%;
+  background-image: url(../images/empire-hit.png);
+  background-size: cover;
   border: 1px dotted #15effe;
 }
 
-.miss {
+.enemy-miss {
   border: 1px dotted black;
   height: 10%;
   width: 10%;
-  background: #15effe;
+  background-image: url(../images/rebel-miss.png);
+  background-size: cover;
+  border: 1px dotted #15effe;
+}
+
+.player-miss {
+  border: 1px dotted black;
+  height: 10%;
+  width: 10%;
+  background-image: url(../images/empire-miss.png);
+  background-size: cover;
+  border: 1px dotted #15effe;
 }

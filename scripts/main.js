@@ -1,9 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
   let cpuHits = 0
   let playerHits = 0
-  const cpuAttempts = []
-  const playerAttempts = []
-  const cpuOccupied = []
+  let cpuAttempts = []
+  let cpuOccupied = []
+
+  const newGame = document.querySelector('.new-game')
+  newGame.addEventListener('click', () => {
+    window.location.reload()
+  })
   // Create Ship constructor
   class Ship {
     constructor(type, size, id) {
@@ -76,9 +80,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const direction = Math.floor(Math.random() * 2) // 0 for horizontal. 1 for vertical
 
-        if(direction === 0) {
-          position = Math.floor(Math.random() * 100)
-          if(!cpuOccupied.includes(position)) {
+        if(!cpuOccupied.includes(position)) {
+          if(direction === 0) {
+            position = Math.floor(Math.random() * 100)
             if (position % 10 > (10 - shipLength)) {
               this.placeCpuShips(shipLength)
             } else {
@@ -87,19 +91,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 cpuOccupied.push(position + j)
               }
             }
-          } else if (cpuOccupied.includes(position)) {
-            this.placeCpuShips(shipLength)
-          }
-        } else if (direction === 1) {
-          position = Math.floor(Math.random() * ((100 - (shipLength * 10)) + 10))
-          if(!cpuOccupied.includes(position)) {
+          } else if (direction === 1) {
+            position = Math.floor(Math.random() * ((100 - (shipLength * 10)) + 10))
             for(let j = 0; j < shipLength; j++) {
               this.gridItem[position + j * 10].setAttribute('class', 'ship')
               cpuOccupied.push(position + j * 10)
             }
-          } else if(cpuOccupied.includes(position)){
-            this.placeCpuShips(shipLength)
           }
+        } else if(cpuOccupied.includes(position)){
+          this.placeCpuShips(shipLength)
         }
       }
       console.log(cpuOccupied)
@@ -196,6 +196,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function initGame() {
+    cpuHits = 0
+    playerHits = 0
+    cpuAttempts = []
+    playerAttempts = []
+    cpuOccupied = []
     new Board('player')
     new Board('cpu')
   }
@@ -216,12 +221,12 @@ document.addEventListener('DOMContentLoaded', () => {
       attack.forEach((item) => {
         item.addEventListener('click', (e) => {
           if(item.classList.contains('enemy-ship')) {
-            e.target.setAttribute('class', 'hit')
+            e.target.setAttribute('class', 'player-hit')
             playerHits++
             setTimeout(cpuAttack, 1000)
             // cpuAttack()
           } else if(item.classList.contains('cpu-cell')) {
-            e.target.setAttribute('class', 'miss')
+            e.target.setAttribute('class', 'player-miss')
             setTimeout(cpuAttack, 1000)
             // cpuAttack()
           }
@@ -239,12 +244,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if(!cpuAttempts.includes((choice))) {
         if(attack[choice].classList.contains('ship')) {
-          attack[choice].setAttribute('class', 'hit')
+          attack[choice].setAttribute('class', 'enemy-hit')
           cpuAttempts.push(choice)
           cpuHits++
           playerAttack()
         } else {
-          attack[choice].setAttribute('class', 'miss')
+          attack[choice].setAttribute('class', 'enemy-miss')
           cpuAttempts.push(choice)
           playerAttack()
         }
