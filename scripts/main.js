@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
   let cpuHits = 0
   let playerHits = 0
-  let cpuAttempts = []
-  let cpuOccupied = []
+  // let cpuAttempts = []
+
 
   const newGame = document.querySelector('.new-game')
   newGame.addEventListener('click', () => {
@@ -75,6 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     placeCpuShips(shipLength) {
       let position
+      const cpuOccupied = []
 
       if(this.playerType === 'cpu') {
 
@@ -196,11 +197,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function initGame() {
-    cpuHits = 0
-    playerHits = 0
-    cpuAttempts = []
-    playerAttempts = []
-    cpuOccupied = []
     new Board('player')
     new Board('cpu')
   }
@@ -224,11 +220,9 @@ document.addEventListener('DOMContentLoaded', () => {
             e.target.setAttribute('class', 'player-hit')
             playerHits++
             setTimeout(cpuAttack, 1000)
-            // cpuAttack()
           } else if(item.classList.contains('cpu-cell')) {
             e.target.setAttribute('class', 'player-miss')
             setTimeout(cpuAttack, 1000)
-            // cpuAttack()
           }
         })
       })
@@ -236,6 +230,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function cpuAttack() {
+    const cpuAttempts = []
     if(playerHits === 17) {
       result('player')
     } else {
