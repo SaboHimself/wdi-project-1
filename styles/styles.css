@@ -37,7 +37,7 @@ main {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  background: cyan;
+  background: #15effe;
 }
 
 .enemy-wrapper {
@@ -63,39 +63,39 @@ main {
 .enemy-text {
   max-width: 350px;
   height: 200px;
-  color: cyan;
+  color: #15effe;
   font-family: sans-serif;
 }
 
 .cpu-cell,.player-cell {
-  border: 1px dotted cyan;
+  border: 1px dotted #15effe;
   height: 10%;
   width: 10%;
   background: black;
 }
 
 .cpu-cell:hover,.player-cell:hover,.ship:hover,.enemy-ship:hover {
-  border: 3px dotted cyan;
+  border: 3px dotted #15effe;
   border-radius: 5%;
   transform: scale(1.1);
 }
 
 .finished {
-  border: 1px dotted cyan;
+  border: 1px dotted #15effe;
   height: 10%;
   width: 10%;
   background: black;
 }
 
 .ship {
-  border: 1px dotted cyan;
+  border: 1px dotted #15effe;
   height: 10%;
   width: 10%;
   background: grey;
 }
 
 .enemy-ship {
-  border: 1px dotted cyan;
+  border: 1px dotted #15effe;
   height: 10%;
   width: 10%;
   background: black;
@@ -106,12 +106,12 @@ main {
   height: 10%;
   width: 10%;
   background: red;
-  border: 1px dotted cyan;
+  border: 1px dotted #15effe;
 }
 
 .miss {
   border: 1px dotted black;
   height: 10%;
   width: 10%;
-  background: cyan;
+  background: #15effe;
 }

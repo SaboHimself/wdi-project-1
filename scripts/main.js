@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
   let playerHits = 0
   let cpuAttempts = []
   let playerAttempts = []
+  let cpuOccupied = []
+  let playerOccupied = []
   // Create Ship constructor
   class Ship {
     constructor(type, size, id) {
@@ -21,7 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
     constructor (playerType) {
       this.playerType = playerType
       this.shipsPlaced = false
-      this.occupied = []
       this.buildBoard()
       this.buildFleet()
       this.placeCpuShips()
@@ -72,17 +73,16 @@ document.addEventListener('DOMContentLoaded', () => {
         for(let i = 0; i < this.fleet.length; i++) {
           const direction = Math.floor(Math.random() * 2) // 0 for horizontal. 1 for vertical
           ship = this.fleet[i]
-          ship.direction = direction
 
           if(direction === 0) {
-            position = Math.floor(Math.random() * (100 - ship.size))
+            position = Math.floor(Math.random() * 100)
             for(let j = 0; j < ship.size; j++) {
-              this.gridItem[position + j].setAttribute('class', 'enemy-ship')
+              this.gridItem[position + j].setAttribute('class', 'ship')
             }
           } else {
-            position = Math.floor(Math.random() * (10 - ship.size))
+            position = Math.floor(Math.random() * 100)
             for(let j = 0; j < ship.size; j++) {
-              this.gridItem[position + j * 10].setAttribute('class', 'enemy-ship')
+              this.gridItem[position + j * 10].setAttribute('class', 'ship')
             }
           }
         }
@@ -106,11 +106,11 @@ document.addEventListener('DOMContentLoaded', () => {
                   itemsToCover = dataId + i * 10
                   e.target.setAttribute('class', 'ship')
                   this.gridItem[itemsToCover].setAttribute('class', 'ship')
-                  this.occupied.push(itemsToCover)
+                  playerOccupied.push(itemsToCover)
                 } else {
                   itemsToCover = dataId + i
                   this.gridItem[itemsToCover].setAttribute('class', 'ship')
-                  this.occupied.push(itemsToCover)
+                  playerOccupied.push(itemsToCover)
                 }
               }
               ship++
@@ -120,11 +120,11 @@ document.addEventListener('DOMContentLoaded', () => {
                   itemsToCover = dataId + i * 10
                   e.target.setAttribute('class', 'ship')
                   this.gridItem[itemsToCover].setAttribute('class', 'ship')
-                  this.occupied.push(itemsToCover)
+                  playerOccupied.push(itemsToCover)
                 } else {
                   itemsToCover = dataId + i
                   this.gridItem[itemsToCover].setAttribute('class', 'ship')
-                  this.occupied.push(itemsToCover)
+                  playerOccupied.push(itemsToCover)
                 }
               }
               ship++
@@ -134,11 +134,11 @@ document.addEventListener('DOMContentLoaded', () => {
                   itemsToCover = dataId + i * 10
                   e.target.setAttribute('class', 'ship')
                   this.gridItem[itemsToCover].setAttribute('class', 'ship')
-                  this.occupied.push(itemsToCover)
+                  playerOccupied.push(itemsToCover)
                 } else {
                   itemsToCover = dataId + i
                   this.gridItem[itemsToCover].setAttribute('class', 'ship')
-                  this.occupied.push(itemsToCover)
+                  playerOccupied.push(itemsToCover)
                 }
               }
               ship++
@@ -148,11 +148,11 @@ document.addEventListener('DOMContentLoaded', () => {
                   itemsToCover = dataId + i * 10
                   e.target.setAttribute('class', 'ship')
                   this.gridItem[itemsToCover].setAttribute('class', 'ship')
-                  this.occupied.push(itemsToCover)
+                  playerOccupied.push(itemsToCover)
                 } else {
                   itemsToCover = dataId + i
                   this.gridItem[itemsToCover].setAttribute('class', 'ship')
-                  this.occupied.push(itemsToCover)
+                  playerOccupied.push(itemsToCover)
                 }
               }
               ship++
@@ -162,17 +162,15 @@ document.addEventListener('DOMContentLoaded', () => {
                   itemsToCover = dataId + i * 10
                   e.target.setAttribute('class', 'ship')
                   this.gridItem[itemsToCover].setAttribute('class', 'ship')
-                  this.occupied.push(itemsToCover)
+                  playerOccupied.push(itemsToCover)
                 } else {
                   itemsToCover = dataId + i
                   this.gridItem[itemsToCover].setAttribute('class', 'ship')
-                  this.occupied.push(itemsToCover)
+                  playerOccupied.push(itemsToCover)
                 }
               }
               ship++
-              playerAttack()
-              console.log(this.occupied)
-              console.log(ship)
+              cpuAttack()
             }
           })
         })
@@ -192,25 +190,37 @@ document.addEventListener('DOMContentLoaded', () => {
         if(item.classList.contains('enemy-ship')) {
           e.target.setAttribute('class', 'hit')
           playerHits++
+          // setTimeout(cpuAttack, 2000)
           cpuAttack()
         } else if(item.classList.contains('cpu-cell')) {
           e.target.setAttribute('class', 'miss')
+          // setTimeout(cpuAttack, 2000)
           cpuAttack()
         }
       })
     })
   }
 
-  // function cpuAttack() {
-  //
-  //   if(attack.classList.contains('ship')) {
-  //     attack.setAttribute('class', 'hit')
-  //     cpuHits++
-  //     playerAttack()
-  //   } else if(attack.classList.contains('player-cell')) {
-  //     attack.setAttribute('class', 'miss')
-  //     playerAttack()
-  //   }
-  // }
+  function cpuAttack() {
+    const choice = Math.floor(Math.random() * 100)
+    const attack = document.querySelectorAll('#player-cell')
+    console.log('my turn')
+    if(!cpuAttempts.includes((choice))) {
+      if(attack[choice].classList.contains('ship')) {
+        attack[choice].setAttribute('class', 'hit')
+        console.log(choice)
+        cpuAttempts.push(choice)
+        playerAttack()
+      } else {
+        attack[choice].setAttribute('class', 'miss')
+        console.log(choice)
+        cpuAttempts.push(choice)
+        playerAttack()
+      }
+    } else {
+      console.log('repeat')
+      cpuAttack()
+    }
+  }
   initGame()
 })
