@@ -4,13 +4,43 @@ document.addEventListener('DOMContentLoaded', () => {
   const cpuAttempts = []
   const cpuOccupied = []
 
-
+  const header = document.querySelector('header')
+  const main = document.querySelector('main')
+  const starwars = document.querySelector('.star-wars')
+  const fade = document.querySelector('.fade')
+  const music = document.querySelector('.music')
+  const sfx = document.querySelector('.sfx')
+  const start = document.querySelector('.start')
+  const intro = document.querySelector('.intro')
   const newGame = document.querySelector('.new-game')
   newGame.addEventListener('click', () => {
     window.location.reload()
   })
 
-  const sfx = document.querySelector('audio')
+  start.addEventListener('click', () => {
+    start.style.display = 'none'
+    intro.style.display = 'flex'
+    setTimeout(() => {
+      intro.style.display = 'none'
+    }, 2500)
+    setTimeout(() => {
+      music.src = 'audio/theme.wav'
+      music.play()
+      starwars.style.display = 'flex'
+      fade.style.display = 'block'
+    }, 3000)
+    setTimeout(() => {
+      header.style.display = 'flex'
+      main.style.display = 'flex'
+      starwars.style.display = 'none'
+      fade.style.display = 'none'
+    }, 50000)
+    setTimeout(() => {
+      music.src = 'audio/cantina.wav'
+      music.play()
+    }, 70000)
+  })
+
   // Create Ship constructor
   class Ship {
     constructor(type, size, id) {
@@ -127,14 +157,13 @@ document.addEventListener('DOMContentLoaded', () => {
           if(this.checkCollisionVert(position, ship.size)) {
             for(let i = 0; i < ship.size; i++) {
               this.gridItem[position + i * 10].setAttribute('class', 'enemy-ship')
-              cpuOccupied.push(position + i * 10)
+              cpuOccupied.push(position + (i * 10))
             }
           } else {
             this.placeCpuShips(ship)
           }
         }
       }
-      console.log(cpuOccupied)
     }
 
     placePlayerShips() {
@@ -234,15 +263,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function result(winner){
     if(winner === 'cpu') {
-      alert('You lose')
+      alert('You Lose')
     } else {
-      alert('winner')
+      alert('You Win')
     }
   }
 
   function playerAttack() {
     if(cpuHits === 17) {
       result('cpu')
+      newGame.style.display = 'block'
     } else {
       const attack = document.querySelectorAll('#cpu-cell')
       attack.forEach((item) => {
@@ -252,12 +282,12 @@ document.addEventListener('DOMContentLoaded', () => {
             sfx.play()
             e.target.setAttribute('class', 'enemy-hit')
             playerHits++
-            setTimeout(cpuAttack, 1000)
+            setTimeout(cpuAttack, 1200)
           } else if(item.classList.contains('cpu-cell')) {
             sfx.src = 'audio/miss.wav'
             sfx.play()
             e.target.setAttribute('class', 'player-miss')
-            setTimeout(cpuAttack, 1000)
+            setTimeout(cpuAttack, 1200)
           }
         })
       })
@@ -267,6 +297,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function cpuAttack() {
     if(playerHits === 17) {
       result('player')
+      newGame.style.display = 'block'
     } else {
       const choice = Math.floor(Math.random() * 100)
       const attack = document.querySelectorAll('#player-cell')
@@ -291,6 +322,5 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   }
-
   initGame()
 })

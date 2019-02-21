@@ -1,13 +1,64 @@
 body {
   background-image: url(../images/space.png);
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 * {
   box-sizing: border-box;
 }
 
-header {
+.start {
   display: flex;
+  margin: 25% auto;
+  justify-content: center;
+  color: #ffe820;
+  font-family: sans-serif;
+  font-size: 40px;
+  cursor: pointer;
+}
+
+.intro {
+  display: none;
+  margin-top: 22.5%;
+  margin-left: 32.5%;
+  justify-content: center;
+  align-self: center;
+  width: 550px;
+  color: #15effe;
+  font-family: sans-serif;
+  font-size: 40px;
+}
+
+.fade-in {
+  animation: fade-in 5s;
+}
+@keyframes fade-in {
+  from { opacity: 0 }
+  to { opacity: 1 }
+}
+
+.fade-out {
+  animation: fade-out 3s;
+  animation-delay: 45s;
+}
+@keyframes fade-out {
+  from { opacity: 1 }
+  to { opacity: 0 }
+}
+
+.fade-out-intro {
+  animation: fade-out-intro 2s;
+  animation-delay: 1s
+}
+@keyframes fade-out-intro {
+  from { opacity: 1 }
+  to { opacity: 0 }
+}
+
+header {
+  display: none;
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -19,7 +70,7 @@ header {
 }
 
 main {
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
 }
@@ -31,7 +82,7 @@ main {
 }
 
 .player-board, .cpu-board {
-  box-shadow: 0 0 20px 10px #ffe918;
+  box-shadow: 0 0 20px 10px #ffe820;
   min-width: 500px;
   min-height: 500px;
   display: flex;
@@ -67,13 +118,14 @@ main {
 }
 
 .new-game {
+  display: none;
   padding: 15px;
   max-width: 350px;
   height: 50px;
   color: #15effe;
   font-family: sans-serif;
   border: 2px solid #15effe;
-  box-shadow: 0 0 30px cyan;
+  box-shadow: 0 0 30px #15effe;
 }
 
 .new-game:hover {
@@ -100,7 +152,7 @@ main {
   border: 1px dotted #15effe;
   height: 10%;
   width: 10%;
-  background: grey;
+  background: rgba(138,138,138,.5);
 }
 
 .enemy-ship {
@@ -143,4 +195,58 @@ main {
   background-image: url(../images/empire-miss.png);
   background-size: cover;
   border: 1px dotted #15effe;
+}
+
+/***********************************/
+.fade {
+  position: relative;
+  width: 100%;
+  min-height: 30vh;
+  top: -25px;
+  background-image: linear-gradient(0deg, transparent, black 75%);
+  z-index: 1;
+  display: none;
+}
+
+.star-wars {
+  display: none;
+  justify-content: center;
+  position: relative;
+  height: 800px;
+  color: #ffe820;
+  font-family: sans-serif;
+  font-size: 500%;
+  font-weight: 600;
+  letter-spacing: 6px;
+  line-height: 150%;
+  perspective: 400px;
+  text-align: justify;
+}
+
+.crawl {
+  position: relative;
+  top: 100px;
+  transform-origin: 50% 100%;
+  animation: crawl 60s linear;
+}
+
+.crawl > .title {
+  font-size: 90%;
+  text-align: center;
+}
+
+.crawl > .title h1 {
+  margin: 0 0 100px;
+  text-transform: uppercase;
+}
+
+@keyframes crawl {
+  0% {
+    top: 0;
+    transform: rotateX(20deg)  translateZ(0);
+  }
+  100% {
+    top: -6000px;
+    transform: rotateX(25deg) translateZ(-2500px);
+  }
 }
