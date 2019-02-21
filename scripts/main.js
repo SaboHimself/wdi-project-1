@@ -73,27 +73,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     checkCollisionHorz(position, shipLength) {
+      let check
       for(let i = 0; i < shipLength; i++) {
-        if(!cpuOccupied.includes(this.gridItem[position + i])) {
-          console.log('no collision')
-          return true
+        if(!cpuOccupied.includes(position + i)) {
+          check = true
         } else {
-          console.log('is collision')
           return false
         }
       }
+      if(check) return true
     }
 
     checkCollisionVert(position, shipLength) {
+      let check
       for(let i = 0; i < shipLength; i++) {
-        if(!cpuOccupied.includes(this.gridItem[position + i]) && !cpuOccupied.includes(this.gridItem[position + i * 10])) {
-          console.log('no collision')
-          return true
+        if(!cpuOccupied.includes(position + i) && !cpuOccupied.includes(position + (i * 10))) {
+          check = true
         } else {
-          console.log('is collision')
           return false
         }
       }
+      if(check) return true
     }
 
     placeCpuShips(shipLength) {
@@ -133,7 +133,6 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }
       }
-      console.log(cpuOccupied)
     }
 
     placePlayerShips() {
