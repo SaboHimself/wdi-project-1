@@ -1,7 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
   let cpuHits = 0
   let playerHits = 0
-  // let cpuAttempts = []
+  const cpuAttempts = []
+  const cpuOccupied = []
+  let i
+  let test = true
 
 
   const newGame = document.querySelector('.new-game')
@@ -71,36 +74,62 @@ document.addEventListener('DOMContentLoaded', () => {
       this.fleet.push(carrier, battleship, cruiser, submarine, destroyer)
     }
 
+    checkCollisionHorz(position, shipLength) {
+      for(let i = 0; i < shipLength; i++) {
+        if(!cpuOccupied.includes(this.gridItem[position + i])) {
+          return true
+        } else {
+          return false
+        }
+      }
+    }
+
+    checkCollisionVert(position, shipLength) {
+      for(let i = 0; i < shipLength; i++) {
+        if(!cpuOccupied.includes(this.gridItem[position + i * 10])) {
+          return true
+        } else {
+          return false
+        }
+      }
+    }
 
 
     placeCpuShips(shipLength) {
       let position
-      const cpuOccupied = []
 
       if(this.playerType === 'cpu') {
 
         const direction = Math.floor(Math.random() * 2) // 0 for horizontal. 1 for vertical
 
-        if(!cpuOccupied.includes(position)) {
-          if(direction === 0) {
-            position = Math.floor(Math.random() * 100)
+        if(direction === 0) {
+          position = Math.floor(Math.random() * 100)
+
+          if(this.checkCollisionHorz(position, shipLength)) {
+
             if (position % 10 > (10 - shipLength)) {
               this.placeCpuShips(shipLength)
             } else {
-              for(let j = 0; j < shipLength; j++) {
-                this.gridItem[position + j].setAttribute('class', 'ship')
-                cpuOccupied.push(position + j)
+
+              for(let i = 0; i < shipLength; i++) {
+                this.gridItem[position + i].setAttribute('class', 'ship')
+                cpuOccupied.push(position + i)
               }
             }
-          } else if (direction === 1) {
-            position = Math.floor(Math.random() * ((100 - (shipLength * 10)) + 10))
-            for(let j = 0; j < shipLength; j++) {
-              this.gridItem[position + j * 10].setAttribute('class', 'ship')
-              cpuOccupied.push(position + j * 10)
-            }
+          } else {
+            this.placeCpuShips(shipLength)
           }
-        } else if(cpuOccupied.includes(position)){
-          this.placeCpuShips(shipLength)
+        } else if (direction === 1) {
+          position = Math.floor(Math.random() * ((100 - (shipLength * 10)) + 10))
+
+          if(this.checkCollisionVert(position, shipLength)) {
+            for(let i = 0; i < shipLength; i++) {
+              this.gridItem[position + i * 10].setAttribute('class', 'ship')
+              cpuOccupied.push(position + i * 10)
+            }
+          } else {
+            this.placeCpuShips(shipLength)
+          }
         }
       }
       console.log(cpuOccupied)
@@ -217,12 +246,12 @@ document.addEventListener('DOMContentLoaded', () => {
       attack.forEach((item) => {
         item.addEventListener('click', (e) => {
           if(item.classList.contains('enemy-ship')) {
-            e.target.setAttribute('class', 'player-hit')
+            e.target.setAttribute('class', 'enemy-hit')
             playerHits++
-            setTimeout(cpuAttack, 1000)
+            setTimeout(cpuAttack, 500)
           } else if(item.classList.contains('cpu-cell')) {
             e.target.setAttribute('class', 'player-miss')
-            setTimeout(cpuAttack, 1000)
+            setTimeout(cpuAttack, 500)
           }
         })
       })
@@ -230,7 +259,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function cpuAttack() {
-    const cpuAttempts = []
     if(playerHits === 17) {
       result('player')
     } else {
@@ -239,7 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if(!cpuAttempts.includes((choice))) {
         if(attack[choice].classList.contains('ship')) {
-          attack[choice].setAttribute('class', 'enemy-hit')
+          attack[choice].setAttribute('class', 'player-hit')
           cpuAttempts.push(choice)
           cpuHits++
           playerAttack()
