@@ -31,7 +31,7 @@ main {
 }
 
 .player-board, .cpu-board {
-  border: 5px inset #ffe918;
+  box-shadow: 0 0 20px 10px #ffe918;
   min-width: 500px;
   min-height: 500px;
   display: flex;

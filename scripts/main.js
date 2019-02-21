@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
   newGame.addEventListener('click', () => {
     window.location.reload()
   })
+
+  const sfx = document.querySelector('audio')
   // Create Ship constructor
   class Ship {
     constructor(type, size, id) {
@@ -29,11 +31,11 @@ document.addEventListener('DOMContentLoaded', () => {
       this.shipsPlaced = false
       this.buildBoard()
       this.buildFleet()
-      this.placeCpuShips(5)
-      this.placeCpuShips(4)
-      this.placeCpuShips(3)
-      this.placeCpuShips(3)
-      this.placeCpuShips(2)
+      this.placeCpuShips(this.fleet[0])
+      this.placeCpuShips(this.fleet[1])
+      this.placeCpuShips(this.fleet[2])
+      this.placeCpuShips(this.fleet[3])
+      this.placeCpuShips(this.fleet[4])
       this.placePlayerShips()
     }
 
@@ -96,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if(check) return true
     }
 
-    placeCpuShips(shipLength) {
+    placeCpuShips(ship) {
       let position
 
       if(this.playerType === 'cpu') {
@@ -106,33 +108,33 @@ document.addEventListener('DOMContentLoaded', () => {
         if(direction === 0) {
           position = Math.floor(Math.random() * 100)
 
-          if(this.checkCollisionHorz(position, shipLength)) {
-
-            if (position % 10 > (10 - shipLength)) {
-              this.placeCpuShips(shipLength)
+          if(this.checkCollisionHorz(position, ship.size)) {
+            if (position % 10 > (10 - ship.size)) {
+              this.placeCpuShips(ship)
             } else {
 
-              for(let i = 0; i < shipLength; i++) {
+              for(let i = 0; i < ship.size; i++) {
                 this.gridItem[position + i].setAttribute('class', 'enemy-ship')
                 cpuOccupied.push(position + i)
               }
             }
           } else {
-            this.placeCpuShips(shipLength)
+            this.placeCpuShips(ship)
           }
         } else if (direction === 1) {
-          position = Math.floor(Math.random() * ((100 - (shipLength * 10)) + 10))
+          position = Math.floor(Math.random() * ((100 - (ship.size * 10)) + 10))
 
-          if(this.checkCollisionVert(position, shipLength)) {
-            for(let i = 0; i < shipLength; i++) {
+          if(this.checkCollisionVert(position, ship.size)) {
+            for(let i = 0; i < ship.size; i++) {
               this.gridItem[position + i * 10].setAttribute('class', 'enemy-ship')
               cpuOccupied.push(position + i * 10)
             }
           } else {
-            this.placeCpuShips(shipLength)
+            this.placeCpuShips(ship)
           }
         }
       }
+      console.log(cpuOccupied)
     }
 
     placePlayerShips() {
@@ -246,12 +248,16 @@ document.addEventListener('DOMContentLoaded', () => {
       attack.forEach((item) => {
         item.addEventListener('click', (e) => {
           if(item.classList.contains('enemy-ship')) {
+            sfx.src = 'audio/tie-fire.wav'
+            sfx.play()
             e.target.setAttribute('class', 'enemy-hit')
             playerHits++
-            setTimeout(cpuAttack, 500)
+            setTimeout(cpuAttack, 1000)
           } else if(item.classList.contains('cpu-cell')) {
+            sfx.src = 'audio/miss.wav'
+            sfx.play()
             e.target.setAttribute('class', 'player-miss')
-            setTimeout(cpuAttack, 500)
+            setTimeout(cpuAttack, 1000)
           }
         })
       })
@@ -267,12 +273,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if(!cpuAttempts.includes((choice))) {
         if(attack[choice].classList.contains('ship')) {
+          sfx.src = 'audio/tie-fire.wav'
+          sfx.play()
           attack[choice].setAttribute('class', 'player-hit')
           cpuAttempts.push(choice)
           cpuHits++
           playerAttack()
         } else {
           attack[choice].setAttribute('class', 'enemy-miss')
+          sfx.src = 'audio/miss.wav'
+          sfx.play()
           cpuAttempts.push(choice)
           playerAttack()
         }
@@ -281,5 +291,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   }
+
   initGame()
 })
