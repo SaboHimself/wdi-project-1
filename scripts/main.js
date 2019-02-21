@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
 
               for(let i = 0; i < shipLength; i++) {
-                this.gridItem[position + i].setAttribute('class', 'ship')
+                this.gridItem[position + i].setAttribute('class', 'enemy-ship')
                 cpuOccupied.push(position + i)
               }
             }
@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
           if(this.checkCollisionVert(position, shipLength)) {
             for(let i = 0; i < shipLength; i++) {
-              this.gridItem[position + i * 10].setAttribute('class', 'ship')
+              this.gridItem[position + i * 10].setAttribute('class', 'enemy-ship')
               cpuOccupied.push(position + i * 10)
             }
           } else {
@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     placePlayerShips() {
-      // THIS IS DISGUSTING!
+      // THIS IS DISGUSTING! TODO - FIX!
       let ship = 0
       let itemsToCover = 0
       const occupied = []
