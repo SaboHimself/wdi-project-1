@@ -3,8 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
   let playerHits = 0
   const cpuAttempts = []
   const cpuOccupied = []
-  let i
-  let test = true
 
 
   const newGame = document.querySelector('.new-game')
@@ -77,8 +75,10 @@ document.addEventListener('DOMContentLoaded', () => {
     checkCollisionHorz(position, shipLength) {
       for(let i = 0; i < shipLength; i++) {
         if(!cpuOccupied.includes(this.gridItem[position + i])) {
+          console.log('no collision')
           return true
         } else {
+          console.log('is collision')
           return false
         }
       }
@@ -86,14 +86,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     checkCollisionVert(position, shipLength) {
       for(let i = 0; i < shipLength; i++) {
-        if(!cpuOccupied.includes(this.gridItem[position + i * 10])) {
+        if(!cpuOccupied.includes(this.gridItem[position + i]) && !cpuOccupied.includes(this.gridItem[position + i * 10])) {
+          console.log('no collision')
           return true
         } else {
+          console.log('is collision')
           return false
         }
       }
     }
-
 
     placeCpuShips(shipLength) {
       let position
