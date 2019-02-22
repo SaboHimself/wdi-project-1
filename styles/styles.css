@@ -11,7 +11,7 @@ body {
 
 .start {
   display: flex;
-  margin: 25% auto;
+  margin: 23% auto;
   justify-content: center;
   color: #ffe820;
   font-family: sans-serif;
@@ -58,7 +58,7 @@ body {
 }
 
 header {
-  display: none;
+  /* display: none; */
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -70,7 +70,7 @@ header {
 }
 
 main {
-  display: none;
+  display: flex;
   justify-content: center;
   align-items: center;
 }
@@ -222,7 +222,6 @@ main {
   perspective: 400px;
   text-align: justify;
 }
-
 .crawl {
   position: relative;
   top: 100px;
@@ -231,7 +230,7 @@ main {
 }
 
 .crawl > .title {
-  font-size: 90%;
+  font-size: 80%;
   text-align: center;
 }
 
@@ -246,7 +245,7 @@ main {
     transform: rotateX(20deg)  translateZ(0);
   }
   100% {
-    top: -6000px;
+    top: -7000px;
     transform: rotateX(25deg) translateZ(-2500px);
   }
 }

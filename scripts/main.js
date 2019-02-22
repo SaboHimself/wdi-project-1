@@ -13,33 +13,41 @@ document.addEventListener('DOMContentLoaded', () => {
   const start = document.querySelector('.start')
   const intro = document.querySelector('.intro')
   const newGame = document.querySelector('.new-game')
+  const enemyText = document.querySelector('.enemy-text')
   newGame.addEventListener('click', () => {
     window.location.reload()
   })
 
-  start.addEventListener('click', () => {
-    start.style.display = 'none'
-    intro.style.display = 'flex'
-    setTimeout(() => {
-      intro.style.display = 'none'
-    }, 2500)
-    setTimeout(() => {
-      music.src = 'audio/theme.wav'
-      music.play()
-      starwars.style.display = 'flex'
-      fade.style.display = 'block'
-    }, 3000)
-    setTimeout(() => {
-      header.style.display = 'flex'
-      main.style.display = 'flex'
-      starwars.style.display = 'none'
-      fade.style.display = 'none'
-    }, 50000)
-    setTimeout(() => {
-      music.src = 'audio/cantina.wav'
-      music.play()
-    }, 70000)
-  })
+  // start.addEventListener('click', () => {
+  //   start.style.display = 'none'
+  //   intro.style.display = 'flex'
+  //   setTimeout(() => {
+  //     intro.style.display = 'none'
+  //   }, 2500)
+  //   setTimeout(() => {
+  //     music.src = 'audio/theme.wav'
+  //     music.play()
+  //     starwars.style.display = 'flex'
+  //     fade.style.display = 'block'
+  //   }, 3000)
+  //   setTimeout(() => {
+  //     header.style.display = 'flex'
+  //     main.style.display = 'flex'
+  //     starwars.style.display = 'none'
+  //     fade.style.display = 'none'
+  //   }, 50000)
+  //   setTimeout(() => {
+  //     music.src = 'audio/cantina.wav'
+  //     music.play()
+  //   }, 70000)
+  // })
+  //
+  // starwars.addEventListener('click', () => {
+  //   header.style.display = 'flex'
+  //   main.style.display = 'flex'
+  //   starwars.style.display = 'none'
+  //   fade.style.display = 'none'
+  // })
 
   // Create Ship constructor
   class Ship {
