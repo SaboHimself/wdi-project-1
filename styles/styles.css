@@ -58,7 +58,7 @@ body {
 }
 
 header {
-  /* display: none; */
+  display: none;
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -70,7 +70,7 @@ header {
 }
 
 main {
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
 }
@@ -118,7 +118,7 @@ main {
 }
 
 .new-game {
-  display: none;
+  display: flex;
   padding: 15px;
   max-width: 350px;
   height: 50px;
@@ -230,7 +230,7 @@ main {
 }
 
 .crawl > .title {
-  font-size: 80%;
+  font-size: 90%;
   text-align: center;
 }
 
