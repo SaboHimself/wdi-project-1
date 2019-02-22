@@ -101,7 +101,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-
     buildFleet () {
       this.fleet = []
       const carrier = new Ship('carrier', 5, 'AC')
